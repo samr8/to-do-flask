@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="eng">
+<head>
+    <title>to-do-app</title>
+</head>
+<body>
+    <h1>To Do</h1>
+    <form action="/add" method="POST">
+     <input type="text" name="task" placeholder="Enter Task" required>
+     <button type="submit">Add</button>
+    </form>
+
+    <ul>
+        {% for task in tasks %}
+        <li>
+            {{task}}
+            <a href="/delete/{{loop.index0}}">❌</a>
+        </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
