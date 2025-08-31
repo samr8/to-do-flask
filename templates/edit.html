@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="eng">
+<head>
+    <title>Edit Task</title>
+</head>
+<body>
+    <h1>Edit Task</h1>
+    <form action="/update/{{task['id']}}" method="POST">
+        <input type="text" name="task" value="{{task[task]}}" required>
+        <button type="submit">Update</button>
+    </form>
+    <a href="/">Back</a>
+</html>

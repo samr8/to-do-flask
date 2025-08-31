@@ -47,6 +47,23 @@ def delete_task(task_id):
     conn.close()
     return redirect(url_for("index"))
 
+@app.route("/edit/<int:task_id>")
+def edit_task(task_id):
+    conn=get_db_connection()
+    task= conn.execute("select* from tasks where id=?",(task_id,)).fetchone()
+    conn.close()
+    return render_template("edit.html",task=task)
+
+@app.route("/update/<int:task_id>",methods=["POST"])
+def update_task(task_id):
+    new_task=request.form.get("task")
+    if new_task:
+        conn=get_db_connection()
+        conn.execute("update tasks set task=? where id=?",(new_task,task_id))
+        conn.commit()
+        conn.close()
+    return redirect(url_for("index"))
+
 
 if __name__=="__main__":
     app.run(debug=True)
