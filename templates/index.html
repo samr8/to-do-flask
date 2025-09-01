@@ -3,6 +3,68 @@
 <head>
     <title>to-do-app</title>
 </head>
+<Style>
+    body{
+        font-family:Arial, Helvetica, sans-serif;
+        background: #f4f4f9;
+        margin:0;
+        padding:20px;
+    }
+
+    h1{ color:#333;}
+
+    form{
+        margin-bottom:20px;
+    }
+
+    input[type="text"]{
+        padding:8px;
+        width:250px;
+        border:1px solid #ccc;
+        border-radius:4px;
+    }
+
+    button{
+        padding: 8px 12px;
+        border:none;
+        background:#007bff;
+        color:white;
+        border-radius:4px;
+        cursor:pointer;
+    }
+
+    button:hover{
+        background: #0056b3;
+    }
+
+    ul{
+        list-style-type: none;
+        padding:0;
+    }
+
+    li{
+        background: white;
+        padding:10px;
+        margin-bottom:8px;
+        border-radius:4px;
+        display:flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .actions a
+    {
+        margin-left:10px;
+        text-decoration:none;
+        font-size:18px;
+    }
+
+    .actions a:hover{
+        opacity:0.7;
+    }
+
+
+</Style>
 <body>
     <h1>To Do</h1>
     <form action="/add" method="POST">
@@ -12,10 +74,13 @@
 
     <ul>
         {% for task in tasks %}
-        <li>
+            <li style="{% if task['completed'] %}text-decoration: line-through; color: gray;{% endif %}">
             {{task["task"]}}
+            <span class ="actions">
             <a href="/edit/{{task['id']}}">✏️</a>
-            <a href="/delete/{{task['id']}}  ">❌</a>
+            <a href="/delete/{{task['id']}}" onclick="return confirm('Delete this task?')">❌</a>
+            <a href="/toggle/{{task['id']}}">{%if task['completed']%}🔄{%else%}✅{%endif%}</a>
+            </span>
         </li>
         {% endfor %}
     </ul>

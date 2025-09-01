@@ -3,10 +3,50 @@
 <head>
     <title>Edit Task</title>
 </head>
+<style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f4f4f9;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            color: #333;
+        }
+        form {
+            margin-bottom: 20px;
+        }
+        input[type="text"] {
+            padding: 8px;
+            width: 250px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            padding: 8px 12px;
+            border: none;
+            background: #28a745;
+            color: white;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #218838;
+        }
+        a {
+            text-decoration: none;
+            color: #007bff;
+            margin-top: 10px;
+            display: inline-block;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
 <body>
     <h1>Edit Task</h1>
-    <form action="/update/{{task['id']}}" method="POST">
-        <input type="text" name="task" value="{{task[task]}}" required>
+    <form action="/update/{{ task['id'] }}" method="POST">
+        <input type="text" name="task" value="{{ task[task] }}" required>
         <button type="submit">Update</button>
     </form>
     <a href="/">Back</a>

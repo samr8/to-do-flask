@@ -15,7 +15,10 @@ def init_db():
     conn.execute('''
                 create table if not exists tasks(
                 id integer primary key autoincrement,
-                task text not null)''')
+                task text not null,
+                completed INTEGER DEFAULT 0,
+                due_date text
+                )''')
     conn.commit()
     conn.close()
 
@@ -62,6 +65,21 @@ def update_task(task_id):
         conn.execute("update tasks set task=? where id=?",(new_task,task_id))
         conn.commit()
         conn.close()
+    return redirect(url_for("index"))
+
+@app.route("/toggle/<int:task_id>")
+def toggle_task(task_id):
+
+    conn=get_db_connection()
+    task=conn.execute("select completed from tasks where id=?",(task_id,)).fetchone()
+    conn.commit()
+
+    if task:
+        new_status=0 if task["completed"] else 1
+        conn.execute("update tasks set completed=? where id=?",(new_status,task_id))
+        conn.commit()
+
+    conn.close()
     return redirect(url_for("index"))
 
 
