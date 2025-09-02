@@ -67,8 +67,25 @@
 </Style>
 <body>
     <h1>To Do</h1>
+      <!-- Search + Sort -->
+    <form method="GET" action="/">
+        <input type="text" name="search" placeholder="Search tasks" value="{{ search }}">
+        <select name="sort">
+            <option value="" {% if sort == "" %}selected{% endif %}>Default</option>
+            <option value="due_date" {% if sort == "due_date" %}selected{% endif %}>Due Date</option>
+            <option value="priority" {% if sort == "priority" %}selected{% endif %}>Priority</option>
+        </select>
+        <button type="submit">Apply</button>
+    </form>
+
     <form action="/add" method="POST">
         <input type="text" name="task" placeholder="Enter Task" required>
+        <input type="date" name="due_date">
+        <select name="priority">
+            <option value="0">Low</option>
+            <option value="1">Medium</option>
+            <option value="2">High</option>
+        </select>
         <button type="submit">Add</button>
     </form>
 
@@ -76,6 +93,13 @@
         {% for task in tasks %}
             <li style="{% if task['completed'] %}text-decoration: line-through; color: gray;{% endif %}">
             {{task["task"]}}
+            {% if task["due_date"]%} | Due:{{task["due_date"]}} {% endif %}
+            | Priority:
+            {% if task["priority"]==2%} High
+            {% elif task["priority"]==1%} Medium
+            {% else %} Low
+            {% endif %}
+
             <span class ="actions">
             <a href="/edit/{{task['id']}}">✏️</a>
             <a href="/delete/{{task['id']}}" onclick="return confirm('Delete this task?')">❌</a>
